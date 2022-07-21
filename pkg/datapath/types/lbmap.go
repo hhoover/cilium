@@ -14,8 +14,8 @@ type LBMap interface {
 	UpsertMaglevLookupTable(uint16, map[string]loadbalancer.BackendID, bool) error
 	IsMaglevLookupTableRecreated(bool) bool
 	DeleteService(loadbalancer.L3n4AddrID, int, bool, loadbalancer.SVCNatPolicy) error
-	AddBackend(*loadbalancer.Backend, bool) error
-	UpdateBackendWithState(*loadbalancer.Backend) error
+	AddBackend(loadbalancer.Backend, bool) error
+	UpdateBackendWithState(loadbalancer.Backend) error
 	DeleteBackendByID(loadbalancer.BackendID) error
 	AddAffinityMatch(uint16, loadbalancer.BackendID) error
 	DeleteAffinityMatch(uint16, loadbalancer.BackendID) error

@@ -38,13 +38,13 @@ func (m *LBMockMap) UpsertService(p *datapathTypes.UpsertServiceParams) error {
 	defer m.Unlock()
 
 	backendIDs := p.GetOrderedBackends()
-	backendsList := make([]*lb.Backend, 0, len(backendIDs))
+	backendsList := make([]lb.Backend, 0, len(backendIDs))
 	for _, backendID := range backendIDs {
 		b, found := m.BackendByID[backendID]
 		if !found {
 			return fmt.Errorf("backend %d not found", p.ID)
 		}
-		backendsList = append(backendsList, b)
+		backendsList = append(backendsList, *b)
 	}
 	backends := p.ActiveBackends
 	if len(p.PreferredBackends) > 0 {
@@ -108,7 +108,7 @@ func (m *LBMockMap) DeleteService(addr lb.L3n4AddrID, backendCount int, maglev b
 	return nil
 }
 
-func (m *LBMockMap) AddBackend(b *lb.Backend, ipv6 bool) error {
+func (m *LBMockMap) AddBackend(b lb.Backend, ipv6 bool) error {
 	m.Lock()
 	defer m.Unlock()
 	id := b.ID
@@ -127,7 +127,7 @@ func (m *LBMockMap) AddBackend(b *lb.Backend, ipv6 bool) error {
 	return nil
 }
 
-func (m *LBMockMap) UpdateBackendWithState(b *lb.Backend) error {
+func (m *LBMockMap) UpdateBackendWithState(b lb.Backend) error {
 	m.Lock()
 	defer m.Unlock()
 	id := b.ID

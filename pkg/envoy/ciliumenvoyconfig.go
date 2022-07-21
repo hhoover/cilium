@@ -661,7 +661,7 @@ func (s *XDSServer) DeleteEnvoyResources(ctx context.Context, resources Resource
 	return nil
 }
 
-func (s *XDSServer) UpsertEnvoyEndpoints(serviceName lb.ServiceName, backendMap map[string][]*lb.Backend) error {
+func (s *XDSServer) UpsertEnvoyEndpoints(serviceName lb.ServiceName, backendMap map[string][]lb.Backend) error {
 	var resources Resources
 	lbEndpoints := []*envoy_config_endpoint.LbEndpoint{}
 	for port, bes := range backendMap {
